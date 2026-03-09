@@ -28,8 +28,13 @@ SECRET_KEY = 'django-insecure-3)habx(h!3pl63wk-u#@n!r08+v=sv^rteqn8-z+d^yppiq$by
 DEBUG = True
 
 
-# Permitir todos los hosts
-ALLOWED_HOSTS = ['*']
+
+import os
+# Permitir localhost y el dominio de Codespaces
+CODESPACE_NAME = os.environ.get('CODESPACE_NAME')
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+if CODESPACE_NAME:
+    ALLOWED_HOSTS.append(f'{CODESPACE_NAME}-8000.app.github.dev')
 
 
 # Application definition
@@ -93,10 +98,6 @@ DATABASES = {
         'ENFORCE_SCHEMA': False,
         'CLIENT': {
             'host': 'mongodb://localhost:27017',
-            'username': '',
-            'password': '',
-            'authSource': 'admin',
-            'authMechanism': 'SCRAM-SHA-1',
         },
     }
 }
